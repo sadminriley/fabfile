@@ -8,8 +8,14 @@ from fabric.contrib.console import *
 
 __author__ = "Riley - riley@fasterdevops.com" 
 __version__ = "0.1"
+"""
 
-# Fab roles and settings
+Fabric tasks to help with system administration
+https://github.com/sadminriley/fabfile
+
+"""
+
+# TODO - Add fabric roles 
 
 def logme(logstr):
     """
@@ -36,7 +42,10 @@ def restart(svc):
     """
     Restart a service
     """
-    sudo("service %s restart" % (svc))
+    if not sudo("service %s restart" % (svc)).failed:
+        logthis(green("restart %s successful" % (svc))
+    else:
+        logthis(red("Failed to restart %s" % (svc))
 
 @task
 def psaux(grep):
