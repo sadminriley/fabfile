@@ -85,3 +85,34 @@ def aptremove(pkgname):
     aptremove = sudo("apt remove %s" % pkgname)
     logme(green("apt remove returned: \n") + str(aptremove))
 
+@task
+def useradd(newuser):
+    """
+    Add a user to a host.
+    """
+    if not sudo("adduser %s" % (newuser)).failed:
+        logthis(green("Add user %s success!" % (newuser))
+	logthis(green("Changed password to %s " % (passwd))
+    else:
+        logthis(red("Failed to adduser %s" % (newuser))
+
+@task
+def chuser(passwd,chuser):
+    """
+    Change a users password.
+    """
+    if not sudo("echo -e '%s\n%s\n'|passwd %s" % (passwd, password, chuser))
+        logthis(green("Successfully changed password to %s for %s" % (passwd, chuser))
+    else:
+        logthis(red("Failed to change %s password" % (chuser))
+
+@task
+def deluser(rmuser):
+    """
+    Delete a user from a host
+    """
+    if not sudo("userdel %s" % rmuser).failed:
+	logthis(green("Deleted user %s successfully" % (rmuser))
+    else:
+        logthis(red("Failed to delete user %s" % (rmuser))
+
