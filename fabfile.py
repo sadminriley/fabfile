@@ -43,9 +43,9 @@ def restart(svc):
     Restart a service
     """
     if not sudo("service %s restart" % (svc)).failed:
-        logthis(green("restart %s successful" % (svc))
+        logme(green("restart %s successful" % (svc))
     else:
-        logthis(red("Failed to restart %s" % (svc))
+        logme(red("Failed to restart %s" % (svc))
 
 @task
 def psaux(grep):
@@ -91,28 +91,28 @@ def useradd(newuser):
     Add a user to a host.
     """
     if not sudo("adduser %s" % (newuser)).failed:
-        logthis(green("Add user %s success!" % (newuser))
-	logthis(green("Changed password to %s " % (passwd))
+        logme(green("Add user %s success!" % (newuser))
+	logme(green("Changed password to %s " % (passwd))
     else:
-        logthis(red("Failed to adduser %s" % (newuser))
+        logme(red("Failed to adduser %s" % (newuser))
 
 @task
 def chuser(passwd,chuser):
     """
     Change a users password.
     """
-    if not sudo("echo -e '%s\n%s\n'|passwd %s" % (passwd, password, chuser))
-        logthis(green("Successfully changed password to %s for %s" % (passwd, chuser))
+    if not sudo("echo -e '%s\n%s\n'|passwd %s" % (passwd, passwd, chuser)).failed:
+        logme(green("Successfully changed password to %s for %s" % (passwd, chuser))
     else:
-        logthis(red("Failed to change %s password" % (chuser))
-
+        logme(red("Failed to change %s password" % (chuser))
+'''
 @task
 def deluser(rmuser):
     """
     Delete a user from a host
     """
-    if not sudo("userdel %s" % rmuser).failed:
-	logthis(green("Deleted user %s successfully" % (rmuser))
+    if not sudo("userdel %s" % (rmuser)).failed:
+	logme(green("Deleted user %s successfully" % (rmuser))
     else:
-        logthis(red("Failed to delete user %s" % (rmuser))
-
+        logme(red("Failed to delete user %s" % (rmuser))
+'''
