@@ -6,7 +6,7 @@ from fabric.colors import *
 from fabric.api import *
 from fabric.contrib.console import *
 
-__author__ = "Riley - riley@fasterdevops.com" 
+__author__ = "Riley - riley@fasterdevops.com"
 __version__ = "0.1"
 """
 
@@ -15,7 +15,7 @@ https://github.com/sadminriley/fabfile
 
 """
 
-# TODO - Add fabric roles 
+# TODO - Add fabric roles
 
 def logme(logstr):
     """
@@ -43,9 +43,9 @@ def restart(svc):
     Restart a service
     """
     if not sudo("service %s restart" % (svc)).failed:
-        logme(green("restart %s successful" % (svc))
+        logme(green("restart %s successful" % (svc)))
     else:
-        logme(red("Failed to restart %s" % (svc))
+        logme(red("Failed to restart %s" % svc))
 
 @task
 def psaux(grep):
@@ -69,10 +69,10 @@ def aptupgrade():
     """
     sudo("apt-get upgrade")
 
-@task 
+@task
 def aptinstall(pkgname):
     """
-    Install a package with apt-get install 
+    Install a package with apt-get install
     """
     aptin = sudo("apt install %s" % pkgname)
     logme(green("apt install returned: \n") + str(aptin))
@@ -91,10 +91,10 @@ def useradd(newuser):
     Add a user to a host.
     """
     if not sudo("adduser %s" % (newuser)).failed:
-        logme(green("Add user %s success!" % (newuser))
-	logme(green("Changed password to %s " % (passwd))
+        logme(green("Add user %s success!" % (newuser)))
+	logme(green("Changed password to %s " % (passwd)))
     else:
-        logme(red("Failed to adduser %s" % (newuser))
+        logme(red("Failed to adduser %s" % (newuser)))
 
 @task
 def chuser(passwd,chuser):
@@ -102,17 +102,17 @@ def chuser(passwd,chuser):
     Change a users password.
     """
     if not sudo("echo -e '%s\n%s\n'|passwd %s" % (passwd, passwd, chuser)).failed:
-        logme(green("Successfully changed password to %s for %s" % (passwd, chuser))
+        logme(green("Successfully changed password to %s for %s" % (passwd, chuser)))
     else:
-        logme(red("Failed to change %s password" % (chuser))
-'''
+        logme(red("Failed to change %s password" % (chuser)))
+
 @task
 def deluser(rmuser):
     """
     Delete a user from a host
     """
     if not sudo("userdel %s" % (rmuser)).failed:
-	logme(green("Deleted user %s successfully" % (rmuser))
+	logme(green("Deleted user %s successfully" % (rmuser)))
     else:
-        logme(red("Failed to delete user %s" % (rmuser))
-'''
+        logme(red("Failed to delete user %s" % (rmuser)))
+
