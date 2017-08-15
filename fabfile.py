@@ -45,3 +45,34 @@ def psaux(grep):
     """
     auxer = sudo("ps aux|grep %s" % grep)
     logme(green("ps aux returned: \n") + str(auxer))
+
+@task
+def aptupdate():
+    """
+    Run apt-update
+    """
+    sudo("apt-get update")
+
+@task
+def aptupgrade():
+    """
+    Run apt-get upgrade. Be sure to run apt-get update with aptupdate first
+    """
+    sudo("apt-get upgrade")
+
+@task 
+def aptinstall(pkgname):
+    """
+    Install a package with apt-get install 
+    """
+    aptin = sudo("apt install %s" % pkgname)
+    logme(green("apt install returned: \n") + str(aptin))
+
+@task
+def aptremove(pkgname):
+    """
+    Remove a package using apt
+    """
+    aptremove = sudo("apt remove %s" % pkgname)
+    logme(green("apt remove returned: \n") + str(aptremove))
+
