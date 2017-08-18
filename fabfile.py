@@ -82,8 +82,8 @@ def aptremove(pkgname):
     """
     Remove a package using apt
     """
-    aptremove = sudo("apt remove %s" % pkgname)
-    logme(green("apt remove returned: \n") + str(aptremove))
+    aptrm = sudo("apt remove %s" % pkgname)
+    logme(green("apt remove returned: \n") + str(aptrm))
 
 @task
 def useradd(newuser):
@@ -92,19 +92,18 @@ def useradd(newuser):
     """
     if not sudo("adduser %s" % (newuser)).failed:
         logme(green("Add user %s success!" % (newuser)))
-	logme(green("Changed password to %s " % (passwd)))
     else:
         logme(red("Failed to adduser %s" % (newuser)))
 
 @task
-def chuser(passwd,chuser):
+def chuser(userch):
     """
     Change a users password.
     """
-    if not sudo("echo -e '%s\n%s\n'|passwd %s" % (passwd, passwd, chuser)).failed:
-        logme(green("Successfully changed password to %s for %s" % (passwd, chuser)))
+    if not sudo("passwd %s" % (userch)).failed:
+        logme(green("Successfully changed password for %s" % (userch)))
     else:
-        logme(red("Failed to change %s password" % (chuser)))
+        logme(red("Failed to change %s password" % (userch)))
 
 @task
 def deluser(rmuser):
@@ -115,4 +114,3 @@ def deluser(rmuser):
 	logme(green("Deleted user %s successfully" % (rmuser)))
     else:
         logme(red("Failed to delete user %s" % (rmuser)))
-
