@@ -88,6 +88,7 @@ def aptupdate():
     """
     Run apt-update
     """
+    state.output.output = True
     sudo("apt-get update")
 
 @task
@@ -102,6 +103,7 @@ def aptinstall(pkgname):
     """
     Install a package with apt-get install
     """
+    state.output.output = True
     aptin = sudo("apt install %s" % pkgname)
     logme(green("apt install returned: \n") + str(aptin))
 
@@ -118,6 +120,7 @@ def useradd(newuser):
     """
     Add a user to a host.
     """
+    state.output.output = True
     if not sudo("adduser %s" % (newuser)).failed:
         logme(green("Add user %s success!" % (newuser)))
     else:
@@ -128,20 +131,11 @@ def chuser(user):
     """
     Change a users password.
     """
+    state.output.output = True
     if not sudo("passwd %s" % (passwd)).failed:
         logme(green("Successfully changed password for user %s" % (user)))
     else:
         logme(red("Failed to change password for %s" % (user)))
-
-@task
-def chuser(userch):
-    """
-    Change a users password.
-    """
-    if not sudo("passwd %s" % (userch)).failed:
-        logme(green("Successfully changed password for %s" % (userch)))
-    else:
-        logme(red("Failed to change %s password" % (userch)))
 
 @task
 def deluser(rmuser):
@@ -165,6 +159,7 @@ def rsync_dir(srcdir, user, host, remotedir):
     """
     rsync a directory to another
     """
+    state.output.output = True
     if not sudo("screen -S rsync -dm bash -c 'rsync -azP %s %s@%s:%s; exec $SHELL' " % (srcdir, user, host, remotedir)).failed:
         logme(green("rsync of %s to %s started" % (srcdir, host)))
     else:
@@ -239,5 +234,6 @@ def targz(src):
     """
     Creates a .tar.gz of a directory. Enter the full path.
     """
+    state.output.output = True
     tar = sudo("tar -czvf %s %s" % (src))
     logme(green("tar -czvf returned:\n") + str(tar))
