@@ -1,7 +1,7 @@
 # Fabfile
 A basic and very generic Fabric file. Mostly giving myself something to work off of for later.
 
-## Available tasks
+## Available commands:
 
     aptinstall  Install a package with apt-get install
     aptremove   Remove a package using apt
@@ -19,8 +19,11 @@ A basic and very generic Fabric file. Mostly giving myself something to work off
     rsync_dir   rsync a directory to another
     status      Check service status ouput
     tailfile    Tail -25 a file,such as a logfile. Use the /full/path/to.file
+    targz       Creates a .tar.gz of a directory. Enter the full path.
     uptime      Get server uptime
     useradd     Add a user to a host.
+    wget        wget from a url into /home
+    ziparchive  Create a .zip archive of a directory. Enter the full path
 
 
 # Example usage

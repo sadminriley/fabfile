@@ -16,7 +16,7 @@ https://github.com/sadminriley/fabfile
 """
 
 # TODO - Add fabric roles
-
+env.warn_only = True
 def logme(logstr):
     """
     helper function to provide output from fabric commands
@@ -208,3 +208,28 @@ def tailfile(file):
     tailer = sudo("tail -25 %s" % (file))
     logme(green("Tail -25 returned:\n" + str(tailer)))
 
+@task
+def ziparchive(src):
+    """
+    Create a .zip archive of a directory. Enter the full path
+    """
+    zipper = sudo("zip -r %s.zip %s" % (src, src))
+    logme(green("zip -r returned:\n") + str(zipper))
+
+@task
+def wget(url):
+    """
+    wget from a url into /home
+    """
+    if not sudo("cd /home && wget %s" % (url)).failed:
+        logme(green("wget complete"))
+    else:
+        logme(red("wget failed!"))
+
+@task
+def targz(src):
+    """
+    Creates a .tar.gz of a directory. Enter the full path.
+    """
+    tar = sudo("tar -czvf %s %s" % (src))
+    logme(green("tar -czvf returned:\n") + str(tar))
