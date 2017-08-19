@@ -1,6 +1,28 @@
 # Fabfile
 A basic and very generic Fabric file. Mostly giving myself something to work off of for later.
 
+## Available tasks
+
+    aptinstall  Install a package with apt-get install
+    aptremove   Remove a package using apt
+    aptupdate   Run apt-update
+    aptupgrade  Run apt-get upgrade. Be sure to run apt-get update with aptupdate first
+    chmod       Run chmod on file
+    chown       Chown a file
+    chuser      Change a users password.
+    deluser     Delete a user from a host
+    dmesg       Get the last 25 entries from dmesg
+    psaux       Runs ps aux|grep on provided input
+    rchmod      Run a recursive chmod on a directory
+    reboot      Reboot a server
+    restart     Restart a service
+    rsync_dir   rsync a directory to another
+    status      Check service status ouput
+    tailfile    Tail -25 a file,such as a logfile. Use the /full/path/to.file
+    uptime      Get server uptime
+    useradd     Add a user to a host.
+
+
 # Example usage
 ## Example usage of utilizing command without options
 ```
