@@ -41,8 +41,6 @@ def ping(host):
     # Not quite sure what I'm going to do with this yet, but I'll leave this here for now.
     # Potentially a helper function to ping remote hosts pre or post function execution
 
-
-
 @task
 def uptime():
     """
@@ -60,6 +58,14 @@ def restart(svc):
         logme(green("restart %s successful" % (svc)))
     else:
         logme(red("Failed to restart %s" % svc))
+
+@task
+def status(svc):
+    """
+    Check service status ouput
+    """
+    stat = sudo("service %s status" % (svc))
+    logme(green("service %s status returned:\n") + str(stat))
 
 @task
 def psaux(grep):
@@ -175,3 +181,30 @@ def rchmod(perms, dir):
         logme(green("chmod -R %d %s success" % (perms, dir)))
     else:
         logme(red("Chmod -R failed! Chmod manually"))
+
+@task
+def chown(user, file):
+    """
+    Chown a file
+    """
+    if not sudo("chown %s:%s %s" % (user, user, file)).failed:
+        logme(green("chown of %s to %s success!" % (file, user)))
+    else:
+        logme(red("Chown failed! Chown manually"))
+
+@task
+def dmesg():
+    """
+    Get the last 25 entries from dmesg
+    """
+    sysdmesg = sudo("dmesg |tail -25")
+    logme(green("dmesg returned: \n") + str(sysdmesg))
+
+@task
+def tailfile(file):
+    """
+    Tail -25 a file,such as a logfile. Use the /full/path/to.file
+    """
+    tailer = sudo("tail -25 %s" % (file))
+    logme(green("Tail -25 returned:\n" + str(tailer)))
+
