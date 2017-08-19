@@ -29,6 +29,20 @@ def sudo(cmd):
     """
     return run('sudo %s' % (cmd))
 
+def ping(host):
+    """
+    Ping function
+    """
+    try:
+        import pyping
+    except ImportError as e:
+        import pip
+        pip.main(['install', 'pyping'])
+    # Not quite sure what I'm going to do with this yet, but I'll leave this here for now.
+    # Potentially a helper function to ping remote hosts pre or post function execution
+
+
+
 @task
 def uptime():
     """
@@ -96,6 +110,16 @@ def useradd(newuser):
         logme(red("Failed to adduser %s" % (newuser)))
 
 @task
+def chuser(user):
+    """
+    Change a users password.
+    """
+    if not sudo("passwd %s" % (passwd)).failed:
+        logme(green("Successfully changed password for user %s" % (user)))
+    else:
+        logme(red("Failed to change password for %s" % (user)))
+
+@task
 def chuser(userch):
     """
     Change a users password.
@@ -114,3 +138,40 @@ def deluser(rmuser):
 	logme(green("Deleted user %s successfully" % (rmuser)))
     else:
         logme(red("Failed to delete user %s" % (rmuser)))
+
+@task
+def reboot():
+    """
+    Reboot a server
+    """
+    sudo("reboot")
+
+@task
+def rsync_dir(srcdir, user, host, remotedir):
+    """
+    rsync a directory to another
+    """
+    if not sudo("screen -S rsync -dm bash -c 'rsync -azP %s %s@%s:%s; exec $SHELL' " % (srcdir, user, host, remotedir)).failed:
+        logme(green("rsync of %s to %s started" % (srcdir, host)))
+    else:
+        logme(red("Failed to start rsync in screen! Make sure screen is installed"))
+
+@task
+def chmod(perms, file):
+    """
+    Run chmod on file
+    """
+    if not sudo("chmod %d %s" % (perms, file)).failed:
+        logme(green("chmod %d %s success" % (perms, file)))
+    else:
+        logme(red("chmod failed! Chmod manually"))
+
+@task
+def rchmod(perms, dir):
+    """
+    Run a recursive chmod on a directory
+    """
+    if not sudo("chmod -R %d %s" % (perms, dir)).failed:
+        logme(green("chmod -R %d %s success" % (perms, dir)))
+    else:
+        logme(red("Chmod -R failed! Chmod manually"))
