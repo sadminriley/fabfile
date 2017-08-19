@@ -15,8 +15,16 @@ https://github.com/sadminriley/fabfile
 
 """
 
-# TODO - Add fabric roles
 env.warn_only = True
+env.output_prefix = False
+
+if sys.argv[1] == '--show=everything':
+    print(red("Running in verbose mode..."))
+else:
+    state.output.running = True
+    state.output.output = False
+    state.output.warnings = False
+
 def logme(logstr):
     """
     helper function to provide output from fabric commands
