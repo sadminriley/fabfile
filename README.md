@@ -12,7 +12,9 @@ A basic and very generic Fabric file. Mostly giving myself something to work off
     chuser      Change a users password.
     deluser     Delete a user from a host
     dmesg       Get the last 25 entries from dmesg
+    getfile     Download a file
     psaux       Runs ps aux|grep on provided input
+    putfile     Upload a file from your local machine. putfile:localfile.tar.gz,/remote/dest
     rchmod      Run a recursive chmod on a directory
     reboot      Reboot a server
     restart     Restart a service
@@ -23,8 +25,7 @@ A basic and very generic Fabric file. Mostly giving myself something to work off
     uptime      Get server uptime
     useradd     Add a user to a host.
     wget        wget from a url into /home
-    ziparchive  Create a .zip archive of a directory. Enter the full path
-
+    ziparchive  Create a .zip archive of a directory. Enter the full 
 
 # Example usage
 ## Example usage of utilizing command without options

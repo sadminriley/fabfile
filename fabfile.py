@@ -14,7 +14,7 @@ Fabric tasks to help with system administration
 https://github.com/sadminriley/fabfile
 
 """
-
+# Silence the default fabric output
 env.warn_only = True
 env.output_prefix = False
 
@@ -73,7 +73,7 @@ def status(svc):
     Check service status ouput
     """
     stat = sudo("service %s status" % (svc))
-    logme(green("service %s status returned:\n") + str(stat))
+    logme(green("service %s status returned:\n" % svc)  + str(stat))
 
 @task
 def psaux(grep):
@@ -224,6 +224,7 @@ def wget(url):
     """
     wget from a url into /home
     """
+    state.output.output = True
     if not sudo("cd /home && wget %s" % (url)).failed:
         logme(green("wget complete"))
     else:
@@ -237,3 +238,19 @@ def targz(src):
     state.output.output = True
     tar = sudo("tar -czvf %s %s" % (src))
     logme(green("tar -czvf returned:\n") + str(tar))
+
+@task
+def putfile(src, dest):
+    """
+    Upload a file from your local machine. putfile:localfile.tar.gz,/remote/dest
+    """
+    state.output.output = True
+    put(local_path=src, remote_path=dest)
+
+@task
+def getfile(src):
+    """
+    Download a file
+    """
+    state.output.output = True
+    get(remote_path=src, local_path="~/", use_sudo=True)
