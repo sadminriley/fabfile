@@ -249,6 +249,6 @@ def getfile(src):
 @task
 def shutdown():
     """
-    Send a shutdown command
+    Sends a shutdown command
     """
     sudo("shutdown -P now")
