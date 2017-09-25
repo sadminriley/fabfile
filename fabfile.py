@@ -231,15 +231,6 @@ def wget(url):
         logme(red("wget failed!"))
 
 @task
-def targz(src):
-    """
-    Creates a .tar.gz of a directory. Enter the full path.
-    """
-    state.output.output = True
-    tar = sudo("tar -czvf %s %s" % (src))
-    logme(green("tar -czvf returned:\n") + str(tar))
-
-@task
 def putfile(src, dest):
     """
     Upload a file from your local machine. putfile:localfile.tar.gz,/remote/dest
@@ -254,3 +245,10 @@ def getfile(src):
     """
     state.output.output = True
     get(remote_path=src, local_path="~/", use_sudo=True)
+
+@task
+def shutdown():
+    """
+    Send a shutdown command
+    """
+    sudo("shutdown -P now")
