@@ -37,18 +37,6 @@ def sudo(cmd):
     """
     return run('sudo %s' % (cmd))
 
-def ping(host):
-    """
-    Ping function
-    """
-    try:
-        import pyping
-    except ImportError as e:
-        import pip
-        pip.main(['install', 'pyping'])
-    # Not quite sure what I'm going to do with this yet, but I'll leave this here for now.
-    # Potentially a helper function to ping remote hosts pre or post function execution
-
 @task
 def uptime():
     """
