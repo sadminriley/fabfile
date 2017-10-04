@@ -248,3 +248,18 @@ def zpr():
     """
     state.output.output = True
     sudo("puppet agent -t")
+
+@task
+def zpe():
+    """
+    Enables puppet on remote host
+    """
+    sudo("puppet agent --enable")
+
+@task
+def zpd():
+    """
+    Disable puppet
+    """
+    reason = 'reasons'
+    sudo("puppet agent --disable %s" % reason)
