@@ -252,3 +252,11 @@ def shutdown():
     Sends a shutdown command
     """
     sudo("shutdown -P now")
+
+@task
+def zpr():
+    """
+    Runs puppet agent -t
+    """
+    state.output.output = True
+    sudo("puppet agent -t")
